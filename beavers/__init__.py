@@ -1,1 +1,1 @@
-from beavers import *
+from .beavers import *

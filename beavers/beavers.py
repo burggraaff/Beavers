@@ -8,12 +8,15 @@ Created on Thu Dec 28 11:01:41 2017
 import numpy as np
 import random
 
+
 class Card(object):
+
     def __init__(self, value):
         self.value = value
 
     def __repr__(self):
         return str(self.value)
+
 
 class SpecialCard(Card):
     def __init__(self, name):
@@ -40,6 +43,7 @@ class SpecialCard(Card):
     def look():
         pass
 
+
 class Stack(object):
     def __init__(self):
         self.take_pile = []
@@ -55,7 +59,9 @@ class Stack(object):
         return self.take_pile.pop()
 
     def __repr__(self):
-        return "Take: {0} ; Discard: {1}".format(len(self.take_pile), len(self.discard_pile))
+        #return "Take: {0} ; Discard: {1}".format(len(self.take_pile), len(self.discard_pile))
+        return f"Take: {len(self.take_pile)} ; Discard: {len(self.discard_pile)}"
+
 
 class Hand(list):
     def __init__(self, cards):
