@@ -11,3 +11,5 @@ import sys
 nrplayers = int(sys.argv[1])
 
 game = b.Game(nrplayers)
+
+game.play()
