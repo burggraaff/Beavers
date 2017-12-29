@@ -6,5 +6,8 @@ Created on Thu Dec 28 10:58:45 2017
 """
 
 import beavers as b
+import sys
 
-game = b.Game(3)
+nrplayers = int(sys.argv[1])
+
+game = b.Game(nrplayers)

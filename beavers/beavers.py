@@ -6,11 +6,10 @@ Created on Thu Dec 28 11:01:41 2017
 """
 
 import numpy as np
-import random
+from random import shuffle
 
 
 class Card(object):
-
     def __init__(self, value):
         self.value = value
 
@@ -20,16 +19,8 @@ class Card(object):
 
 class SpecialCard(Card):
     def __init__(self, name):
+        assert name in ("look", "double", "swap")
         Card.__init__(self, name)
-
-        if name == "swap":
-            self.func = SpecialCard.swap
-        elif name == "double":
-            self.func = SpecialCard.double
-        elif name == "look":
-            self.func = SpecialCard.look
-        else:
-            raise ValueError("Invalid `name` parameter for SpecialCard")
 
     @staticmethod
     def swap():
@@ -52,14 +43,26 @@ class Stack(object):
             self.take_pile.extend(Card(i) for j in range(4))
         self.take_pile.extend(Card(9) for j in range(9))
         for name in ("swap", "double", "look"):
-            self.take_pile.extend(SpecialCard(name) for j in range(5))
-        random.shuffle(self.take_pile)
+            self.take_pile.extend(SpecialCard(name) for j in range(6))
+        shuffle(self.take_pile)
 
     def give(self):
         return self.take_pile.pop()
 
+    def draw(self):
+        if len(self.take_pile) == 0:  # if no cards are left, shuffle
+            shuffle(self.discard_pile)
+            self.take_pile = self.discard_pile
+            self.discard_pile = []
+        self.discard_pile.append(self.take_pile.pop())
+
+    def take_top(self):
+        print(self.take_pile[-1])
+
+    def disc_top(self):
+        print(self.discard_pile[-1])
+
     def __repr__(self):
-        #return "Take: {0} ; Discard: {1}".format(len(self.take_pile), len(self.discard_pile))
         return f"Take: {len(self.take_pile)} ; Discard: {len(self.discard_pile)}"
 
 
@@ -100,12 +103,15 @@ class Round(object):
 
     def activate(self):
         self.active = True
+        self.to_end = False
         self.stack = Stack()
         self.game.active_round = self
 
         for player in self.players:
             start_hand = [self.stack.give() for i in range(4)]
             player.deal_hand(start_hand)
+
+        self.stack.draw()
 
     def end(self):
         scores = [player.score() for player in self.players]
@@ -116,13 +122,14 @@ class Round(object):
 
 class Game(object):
     def __init__(self, nrplayers):
-        self.players = [Player("Player{0}".format(i+1)) for i in range(nrplayers)]
+        assert 3 <= nrplayers <= 6
+        self.players = [Player(f"Player{i+1}") for i in range(nrplayers)]
         self.rounds = [Round(self, self.players) for i in range(nrplayers)]
-        self.scores = np.zeros((len(self.rounds), len(self.players)), dtype = int)
-        self.final_scores = np.zeros(len(self.players), dtype = int)
+        self.scores = np.zeros((len(self.rounds), len(self.players)), dtype=int)
+        self.final_scores = np.zeros(len(self.players), dtype=int)
         self.active_round = None
 
         self.rounds[0].activate()
 
     def __repr__(self):
-        return "Game \nPlayers: {p}\nScores:\n{s}\nFinal scores:\n{f}".format(p = self.players, s = self.scores, f = self.final_scores)
+        return f"Game \nPlayers: {self.players}\nScores:\n{self.scores}\nFinal scores:\n{self.final_scores}"
