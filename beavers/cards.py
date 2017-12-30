@@ -64,8 +64,9 @@ class Stack(object):
         for i in range(9):
             self.take_pile.extend(Card(i) for j in range(4))
         self.take_pile.extend(Card(9) for j in range(9))
-        for name in ("swap", "double", "look"):
-            self.take_pile.extend(SpecialCard(name) for j in range(6))
+        self.take_pile.extend(SpecialCard("swap") for j in range(9))
+        self.take_pile.extend(SpecialCard("look") for j in range(7))
+        self.take_pile.extend(SpecialCard("double") for j in range(5))
         shuffle(self.take_pile)
 
     def give(self):
