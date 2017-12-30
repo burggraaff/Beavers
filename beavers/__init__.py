@@ -1,3 +1,3 @@
-from . import cards
-from .game import *
-from .gui import *
+from . import cards, game, gui
+from .game import Game
+from .gui import Gui
