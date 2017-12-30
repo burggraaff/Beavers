@@ -30,15 +30,15 @@ class Player(object):
         if do == "new":
             new_card = r.stack.give()
             do_new = input(f"Replace card with {new_card}? 'no' if not\n")
-            if do_new == "no":
+            if do_new == "no" or do_new == "":
                 r.stack.discard(new_card)
             else:
-                index = int(do_new)
+                index = int(do_new) - 1
                 to_discard = self.hand[index]
                 self.hand[index] = new_card
                 r.stack.discard(to_discard)
         elif do == "open":
-            index = int(input("Replace which card?\n"))
+            index = int(input("Replace which card?\n")) - 1
             to_discard = self.hand[index]
             self.hand[index] = r.stack.give_from_discard()
             r.stack.discard(to_discard)
