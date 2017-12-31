@@ -25,7 +25,7 @@ class Card(object):
 class SpecialCard(Card):
     def __init__(self, name):
         assert name in ("look", "double", "swap")
-        Card.__init__(self, name)
+        super().__init__(self, name)
 
     @staticmethod
     def swap():
@@ -42,7 +42,7 @@ class SpecialCard(Card):
 
 class Hand(list):
     def __init__(self, cards, stack):
-        list.__init__(self)
+        super().__init__(self)
         self.stack = stack
         assert len(cards) == 4
         self.extend(cards)
