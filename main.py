@@ -12,4 +12,8 @@ nrplayers = int(sys.argv[1])
 
 game = b.Game(nrplayers)
 
-game.play()
+app = b.gui.BeaverApp()
+
+app.run()
+
+#game.play()

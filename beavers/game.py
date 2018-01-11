@@ -82,7 +82,7 @@ class Round(object):
             if player == self.ender:
                 break
             player.play(self)
-            if j > 10:
+            if j > 1:
                 break
 
         scores = self.end()
