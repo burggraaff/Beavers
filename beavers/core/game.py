@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 28 11:01:41 2017
-
-@author: Olivier
-"""
 
 from .cards import Hand, Stack
 

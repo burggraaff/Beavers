@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Dec 30 02:10:49 2017
-
-@author: Olivier
-"""
 
 from random import shuffle
 
