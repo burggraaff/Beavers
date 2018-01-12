@@ -16,4 +16,4 @@ app = b.gui.BeaverApp()
 
 app.run()
 
-#game.play()
+game.play()
