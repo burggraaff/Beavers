@@ -24,15 +24,15 @@ class SpecialCard(Card):
 
     @staticmethod
     def swap():
-        pass
+        raise NotImplementedError
 
     @staticmethod
     def double():
-        pass
+        raise NotImplementedError
 
     @staticmethod
     def look():
-        pass
+        raise NotImplementedError
 
 
 class Hand(list):
