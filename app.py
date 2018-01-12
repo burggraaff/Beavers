@@ -6,14 +6,6 @@ Created on Thu Dec 28 10:58:45 2017
 """
 
 import beavers as b
-import sys
-
-nrplayers = int(sys.argv[1])
-
-game = b.core.Game(nrplayers)
 
 app = b.gui.BeaverApp()
-
 app.run()
-
-game.play()
