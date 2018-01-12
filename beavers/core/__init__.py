@@ -1,2 +1,2 @@
-from . import cards, game
+from . import cards, game, players
 from .game import Game

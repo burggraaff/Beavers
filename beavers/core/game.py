@@ -1,50 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from .cards import Hand, Stack
+from .cards import Stack
+from .players import Human, AI
 
 import numpy as np
 from itertools import cycle
-
-
-class Player(object):
-    def __init__(self, name):
-        self.name = name
-        self.hand = None
-
-    def deal_hand(self, cards, stack):
-        self.hand = Hand(cards, stack)
-
-    def __repr__(self):
-        return self.name
-
-    def score(self):
-        return self.hand.score()
-
-    def play(self, r):
-        do = input(f"{self.name}, what do you want to do? (D: {r.stack.disc_top()})\n")
-        if do == "new":
-            new_card = r.stack.give()
-            do_new = input(f"Replace card with {new_card}? 'no' if not\n")
-            if do_new == "no" or do_new == "":
-                r.stack.discard(new_card)
-            else:
-                index = int(do_new) - 1
-                to_discard = self.hand[index]
-                self.hand[index] = new_card
-                r.stack.discard(to_discard)
-        elif do == "open":
-            index = int(input("Replace which card?\n")) - 1
-            to_discard = self.hand[index]
-            self.hand[index] = r.stack.give_from_discard()
-            r.stack.discard(to_discard)
-        else:
-            pass
-        if r.ender is None:
-            end = bool(input("End round?\n"))
-            if end:
-                r.ender = self
-                print(f"{self.name} is ending the round!")
-        print(self.hand, r.stack)
 
 
 class Round(object):
@@ -94,7 +54,7 @@ class Round(object):
 class Game(object):
     def __init__(self, nrplayers):
         assert 3 <= nrplayers <= 6
-        self.players = [Player(f"Player{i+1}") for i in range(nrplayers)]
+        self.players = [Human("Player1")] + [AI(f"Player{i+2}") for i in range(nrplayers)]
         self.rounds = [Round(self, self.players, i+1) for i in range(nrplayers)]
         self.scores = []
         self.final_scores = np.zeros(len(self.players), dtype=int)
